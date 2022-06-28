@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1638004689 source:/mnt/d/cpp/mojalgorytm/main.cpp
+	<iostream>
+	<math.h>
+	<limits.h>
+

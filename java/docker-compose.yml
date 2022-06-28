@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  maven:
+    container_name: api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      proxy:
+        ipv4_address: 10.200.0.11
+    expose:
+      - 8091
+    env_file:
+      - .env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.walletbackend.rule=Host(`${DOMAIN}`) && PathPrefix(`/api/`)
+      - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=GET,OPTIONS,PUT"
+      - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
+      - "traefik.http.middlewares.cors.headers.accessControlAllowCredentials=true"
+      - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.cors.headers.addvaryheader=true"
+      - traefik.http.routers.walletbackend.middlewares=cors@docker
+      - traefik.docker.network=proxy
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql
+    volumes:
+      - ./../data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_HOST=127.0.0.1
+    networks:
+      proxy:
+        ipv4_address: 10.200.0.12
+
+networks:
+  proxy:
+    external: true

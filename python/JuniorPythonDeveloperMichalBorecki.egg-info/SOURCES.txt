@@ -1,0 +1,6 @@
+README.md
+setup.py
+JuniorPythonDeveloperMichalBorecki.egg-info/PKG-INFO
+JuniorPythonDeveloperMichalBorecki.egg-info/SOURCES.txt
+JuniorPythonDeveloperMichalBorecki.egg-info/dependency_links.txt
+JuniorPythonDeveloperMichalBorecki.egg-info/top_level.txt
